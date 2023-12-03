@@ -1,15 +1,16 @@
 import Data.Char (isDigit, digitToInt)
 
-getNumberFromArray :: String -> String -- Returns string of the numbers on that line
+getNumberFromArray :: String -> String
 getNumberFromArray textBlob = filter isDigit textBlob
 
-takeFirstAndLast :: String -> Int -- Takes the first and last item from a string
+takeFirstAndLast :: String -> Int
 takeFirstAndLast numbers = read [head numbers, last numbers]
+
+part_1 :: [String] -> Int
+part_1 linesArray =  sum $ map (takeFirstAndLast . getNumberFromArray) linesArray
 
 main :: IO ()
 main = do
       input <- readFile "input.txt"
       let linesArray = lines input
-      let totalSum = sum $ map (takeFirstAndLast . getNumberFromArray) linesArray
-      putStrLn $ "Total sum: " ++ show totalSum
-      -- mapM_ (putStrLn . show . getFirstAndLast . getNumberFromArray) linesArray
+      putStrLn $ "Total sum: " ++ (show $ part_1 linesArray)
