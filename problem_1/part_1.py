@@ -1,3 +1,5 @@
+# Property of Bruno :D
+
 def go_right(word):
     for x in word:
         try:

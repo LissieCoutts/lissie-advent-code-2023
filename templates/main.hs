@@ -1,5 +1,6 @@
 import System.Environment
 
+-- Property of David :D
 data Part = One | Two deriving (Show, Ord, Eq, Enum, Bounded)
 instance Read Part where
   readsPrec _ "1" = [(One, "1")]
