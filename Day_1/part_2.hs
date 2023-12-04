@@ -6,7 +6,6 @@ getNumbersFromString textBlob = filter isDigit textBlob
 takeFirstAndLast :: String -> Int
 takeFirstAndLast numbers = read [head numbers, last numbers]
 
--- The problem here is that it works left to right. If the last number on the line is for example twone, then do we want "2" or "1" ?
 replaceWordsWithDigits :: String -> String
 replaceWordsWithDigits [] = []
 replaceWordsWithDigits ('o' : 'n' : 'e' : rest) = '1' : replaceWordsWithDigits ('e' : rest) -- check for eight
