@@ -1,8 +1,7 @@
 -- Game 1: 19 blue, 12 red; 19 blue, 2 green, 1 red; 13 red, 11 blue
-import Data.List (insert, isSuffixOf, sortBy)
+import Data.List (isSuffixOf, sortBy)
 import Data.Char (isDigit)
 import Data.Map.Strict (Map, insertWith, empty, toList)
-import Data.List (foldl')
 import Data.Function (on)
 
 
@@ -31,10 +30,10 @@ sortAndExtractNumbers :: [(String, Int)] -> [Int]
 sortAndExtractNumbers tuples = tail $ map snd $ sortBy (on compare fst) tuples
 
 isPossible :: [Int] -> [Int] -> Bool
-isPossible givenValues maxValues = foldr (&&) True ( zipWith (<) givenValues maxValues)
+isPossible givenValues maxValues = foldr (&&) True ( zipWith (<=) givenValues maxValues)
 
 game_is_possible :: String -> [Int] -> Bool
-game_is_possible givenValues maxValues = isPossible (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues)) [20,20,20]
+game_is_possible givenValues maxValues = isPossible (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues)) maxValues
 
 map_lines_to_bool :: [String] -> [Bool]
 map_lines_to_bool linesArray = map (\line -> game_is_possible line [14,13,12]) linesArray
