@@ -27,5 +27,3 @@ main = do
       input <- readFile "input.txt"
       let linesArray = lines input
       putStrLn $ "Total sum: " ++ (show $ part_2 linesArray)
-
-      -- ["two1nine", "eightwothree", "abcone2threexyz", "xtwone3four", "4nineeightseven2", "zoneight234", "7pqrstsixteen"]
