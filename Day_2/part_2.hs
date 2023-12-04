@@ -29,8 +29,8 @@ accumulateMaxValues tuples = toList $ foldr (\(colour, value) acc -> insertWith 
 sortAndExtractNumbers :: [(String, Int)] -> [Int]
 sortAndExtractNumbers tuples = tail $ map snd $ sortBy (on compare fst) tuples
 
-get_Value_For_Game :: String -> Int
-get_Value_For_Game givenValues = product (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues))
+getValueForGame :: String -> Int
+getValueForGame givenValues = product (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues))
 
 part_2 :: [String] -> Int
 part_2 linesArray = sum $ map get_Value_For_Game linesArray
