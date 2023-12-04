@@ -32,13 +32,13 @@ sortAndExtractNumbers tuples = tail $ map snd $ sortBy (on compare fst) tuples
 isPossible :: [Int] -> [Int] -> Bool
 isPossible givenValues maxValues = foldr (&&) True ( zipWith (<=) givenValues maxValues)
 
-game_is_possible :: String -> [Int] -> Bool
+gameIsPossible :: String -> [Int] -> Bool
 game_is_possible givenValues maxValues = isPossible (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues)) maxValues
 
-map_lines_to_bool :: [String] -> [Bool]
+mapLinesToBool :: [String] -> [Bool]
 map_lines_to_bool linesArray = map (\line -> game_is_possible line [14,13,12]) linesArray
 
-map_bools_to_index :: [Bool] -> [Int]
+mapBoolsToIndex :: [Bool] -> [Int]
 map_bools_to_index bools = map (\(index, value) -> if value then (index + 1) else 0) (zip [0..] bools)
 
 part_1 :: [String] -> Int
