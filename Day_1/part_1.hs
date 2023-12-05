@@ -13,4 +13,4 @@ main :: IO ()
 main = do
       input <- readFile "input.txt"
       let linesArray = lines input
-      putStrLn $ "Total sum: " ++ (show $ part_1 linesArray)
+      putStrLn $ "Total sum: " ++ show (part_1 linesArray)
