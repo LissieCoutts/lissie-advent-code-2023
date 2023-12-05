@@ -4,7 +4,6 @@ import Data.Char (isDigit)
 import Data.Map.Strict (Map, insertWith, empty, toList)
 import Data.Function (on)
 
-
 wordsWhen     :: (Char -> Bool) -> String -> [String]
 wordsWhen p s =  case dropWhile p s of
                       "" -> []
