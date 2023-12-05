@@ -30,7 +30,7 @@ sortAndExtractNumbers :: [(String, Int)] -> [Int]
 sortAndExtractNumbers tuples = tail $ map snd $ sortBy (on compare fst) tuples
 
 isPossible :: [Int] -> [Int] -> Bool
-isPossible givenValues maxValues = foldr (&&) True ( zipWith (<=) givenValues maxValues)
+isPossible givenValues maxValues = and ( zipWith (<=) givenValues maxValues)
 
 gameIsPossible :: String -> [Int] -> Bool
 gameIsPossible givenValues = isPossible (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues))
@@ -39,7 +39,7 @@ mapLinesToBool :: [String] -> [Bool]
 mapLinesToBool = map (\line -> gameIsPossible line [14,13,12])
 
 mapBoolsToIndex :: [Bool] -> [Int]
-mapBoolsToIndex bools = map (\(index, value) -> if value then (index + 1) else 0) (zip [0..] bools)
+mapBoolsToIndex = zipWith (\ index value -> (if value then index + 1 else 0)) [0..]
 
 part_1 :: [String] -> Int
 part_1 linesArray = sum $ (mapBoolsToIndex . mapLinesToBool) linesArray

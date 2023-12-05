@@ -1,7 +1,7 @@
 import Data.Char (isDigit)
 
 getNumbersFromString :: String -> String
-getNumbersFromString textBlob = filter isDigit textBlob
+getNumbersFromString = filter isDigit
 
 takeFirstAndLast :: String -> Int
 takeFirstAndLast numbers = read [head numbers, last numbers]
@@ -26,4 +26,4 @@ main :: IO ()
 main = do
       input <- readFile "input.txt"
       let linesArray = lines input
-      putStrLn $ "Total sum: " ++ (show $ part_2 linesArray)
+      putStrLn $ "Total sum: " ++ show (part_2 linesArray)

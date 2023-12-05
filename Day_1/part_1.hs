@@ -1,7 +1,7 @@
 import Data.Char (isDigit, digitToInt)
 
 getNumberFromArray :: String -> String
-getNumberFromArray textBlob = filter isDigit textBlob
+getNumberFromArray = filter isDigit
 
 takeFirstAndLast :: String -> Int
 takeFirstAndLast numbers = read [head numbers, last numbers]
