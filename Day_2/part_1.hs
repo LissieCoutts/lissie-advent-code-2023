@@ -18,9 +18,9 @@ extractColourAndNumberFromString :: String -> (String, Int)
 extractColourAndNumberFromString [] = ("Nothing" , 0)
 extractColourAndNumberFromString ('G' : 'a' : 'm' : 'e' : rest) = ("Nothing", 0)
 extractColourAndNumberFromString str
-    | isSuffixOf " red" str = ("red", (read $ filter isDigit str))
-    | isSuffixOf " green" str = ("green", (read $ filter isDigit str))
-    | isSuffixOf " blue" str = ("blue", (read $ filter isDigit str))
+    | isSuffixOf " red" str = ("red", read $ filter isDigit str)
+    | isSuffixOf " green" str = ("green", read $ filter isDigit str)
+    | isSuffixOf " blue" str = ("blue", read $ filter isDigit str)
     | otherwise = ("Nothing" , 0)
 
 accumulateMaxValues :: [(String, Int)] -> [(String, Int)]
@@ -33,16 +33,16 @@ isPossible :: [Int] -> [Int] -> Bool
 isPossible givenValues maxValues = foldr (&&) True ( zipWith (<=) givenValues maxValues)
 
 gameIsPossible :: String -> [Int] -> Bool
-game_is_possible givenValues maxValues = isPossible (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues)) maxValues
+gameIsPossible givenValues = isPossible (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues))
 
 mapLinesToBool :: [String] -> [Bool]
-map_lines_to_bool linesArray = map (\line -> game_is_possible line [14,13,12]) linesArray
+mapLinesToBool = map (\line -> gameIsPossible line [14,13,12])
 
 mapBoolsToIndex :: [Bool] -> [Int]
-map_bools_to_index bools = map (\(index, value) -> if value then (index + 1) else 0) (zip [0..] bools)
+mapBoolsToIndex bools = map (\(index, value) -> if value then (index + 1) else 0) (zip [0..] bools)
 
 part_1 :: [String] -> Int
-part_1 linesArray = sum $ (map_bools_to_index . map_lines_to_bool) linesArray
+part_1 linesArray = sum $ (mapBoolsToIndex . mapLinesToBool) linesArray
 
 main :: IO ()
 main = do

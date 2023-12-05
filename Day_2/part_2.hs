@@ -18,9 +18,9 @@ extractColourAndNumberFromString :: String -> (String, Int)
 extractColourAndNumberFromString [] = ("Nothing" , 0)
 extractColourAndNumberFromString ('G' : 'a' : 'm' : 'e' : rest) = ("Nothing", 0)
 extractColourAndNumberFromString str
-    | isSuffixOf " red" str = ("red", (read $ filter isDigit str))
-    | isSuffixOf " green" str = ("green", (read $ filter isDigit str))
-    | isSuffixOf " blue" str = ("blue", (read $ filter isDigit str))
+    | isSuffixOf " red" str = ("red", read $ filter isDigit str)
+    | isSuffixOf " green" str = ("green", read $ filter isDigit str)
+    | isSuffixOf " blue" str = ("blue", read $ filter isDigit str)
     | otherwise = ("Nothing" , 0)
 
 accumulateMaxValues :: [(String, Int)] -> [(String, Int)]
@@ -33,7 +33,7 @@ getValueForGame :: String -> Int
 getValueForGame givenValues = product (sortAndExtractNumbers $ accumulateMaxValues $ map extractColourAndNumberFromString (wordsWhen isSemicolonOrColonOrComma givenValues))
 
 part_2 :: [String] -> Int
-part_2 linesArray = sum $ map get_Value_For_Game linesArray
+part_2 linesArray = sum $ map getValueForGame linesArray
 
 main :: IO ()
 main = do
