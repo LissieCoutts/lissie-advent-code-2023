@@ -41,4 +41,3 @@ main = do
       let linesArray = lines input
       let answer = part_2 linesArray
       putStrLn $ "Total sum: " ++ (show $ answer)
-

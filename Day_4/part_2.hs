@@ -32,14 +32,29 @@ intersect xs ys = filter (\y -> elem y xs) ys
 numberOfWinningNumbersForCard :: Card -> Int
 numberOfWinningNumbersForCard card = length $ intersect (chosenNumbers card) (winningNumbers card)
 
--- build an array of ints. For some index i, add (instances of card) * numberOfWinningNumbersForCard[i] foreach
--- index i + 1 until i + numberOfWinningNumbersForCard[i]  
-
 getCard :: String -> Card
 getCard line = parseCard $ wordsWhen isSemicolonOrColonOrComma line
 
-part_2 :: [String] -> [Card]
-part_2 input =  map (\line ) getCard input
+getCopiesOfCards:: [Card] -> [Int]
+getCopiesOfCards = map currentCopiesOfCard
+
+
+addOneToFirstValuesInList :: (Ord a, Num a, Enum a) => a -> Int -> [Card] -> [Card]
+addOneToFirstValuesInList i numberToAdd = zipWith
+    (\index card -> if index < i then addCopiesToCard card numberToAdd else card) [0..]
+
+addCopiesToCard :: Card -> Int -> Card
+addCopiesToCard card toBeAdded =  card { currentCopiesOfCard = currentCopiesOfCard card + toBeAdded }
+
+addCopies :: [Card] -> [Card]
+addCopies [] = []
+addCopies (x : rest) = x : addCopies (addOneToFirstValuesInList ( numberOfWinningNumbersForCard x) (currentCopiesOfCard x) rest)
+
+numberOfWinningNumbersArray :: [String] -> [Int]
+numberOfWinningNumbersArray = map (numberOfWinningNumbersForCard . getCard)
+
+part_2 :: [String] -> Int
+part_2 linesArray = sum $ (getCopiesOfCards . addCopies . map getCard) linesArray
 
 main :: IO ()
 main = do
