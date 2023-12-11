@@ -1,34 +1,17 @@
-import Text.Read (readMaybe)
 import Data.Char (isDigit)
 
-data Game = Game {
-    gameTime :: Int,
-    recordDistance :: Int,
-    possibleOutcomes :: [Int]
-} deriving (Show)
+getNumberOfPossibleOutcomes :: Int -> Int -> Int
+getNumberOfPossibleOutcomes t s = t - 1 - 2 * floor (fromIntegral t/2 - 0.5 * sqrt (fromIntegral t^2 - 4 * fromIntegral s))
 
-parseInput :: String -> Game
-parseInput line =
+part_2 :: String -> IO ()
+part_2 line =
   let [timeStr, distanceStr] = lines line
-      timeValue = read (filter isDigit timeStr) :: Int
-      distanceValue = read (filter isDigit distanceStr) :: Int
-   in  Game {
-    gameTime = timeValue,
-    recordDistance = distanceValue,
-    possibleOutcomes = getPossibleOutcomes timeValue}
-
-
-getPossibleOutcomes :: Int -> [Int]
-getPossibleOutcomes gameTime = map (\timeHeldAcceleration -> (gameTime - timeHeldAcceleration)* timeHeldAcceleration)  [0 .. gameTime]
-
-filterGamesOnBeatsRecord :: [Int] -> Int -> [Int]
-filterGamesOnBeatsRecord possibleOutcomes currentRecord = filter (> currentRecord) possibleOutcomes
-
-part_2 :: Game -> Int
-part_2 game = length $ filterGamesOnBeatsRecord (possibleOutcomes game) (recordDistance game)
+      time = read (filter isDigit timeStr) :: Int
+      distance = read (filter isDigit distanceStr) :: Int
+      result = getNumberOfPossibleOutcomes time distance
+    in putStrLn $ "Answer: " ++ show result
 
 main :: IO ()
 main = do
       input <- readFile "input.txt"
-      let answer = part_2 $ parseInput input
-      putStrLn $ "Answer: " ++ show answer
+      part_2 input
