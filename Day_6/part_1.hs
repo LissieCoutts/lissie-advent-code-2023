@@ -3,7 +3,7 @@ import Text.Read (readMaybe)
 data Game = Game {
     gameTime :: Int,
     recordDistance :: Int,
-    possibleOutcomes :: [Int]
+    numberOfWinningOutcomes :: [Int]
 } deriving (Show)
 
 parseInput :: String -> [Game]
@@ -14,18 +14,18 @@ parseInput line =
    in zipWith (\time distance -> Game {
     gameTime = time,
     recordDistance = distance,
-    possibleOutcomes = getPossibleOutcomes time}
+    numberOfWinningOutcomes = getNumberOfPossibleOutcomes time}
     ) timeValues distanceValues
 
 
-getPossibleOutcomes :: Int -> [Int]
-getPossibleOutcomes gameTime = map (\timeHeldAcceleration -> (gameTime - timeHeldAcceleration)* timeHeldAcceleration) (take (gameTime + 1) [0..])
+getNumberOfPossibleOutcomes :: Int -> [Int]
+getNumberOfPossibleOutcomes gameTime = map (\timeHeldAcceleration -> (gameTime - timeHeldAcceleration)* timeHeldAcceleration) (take (gameTime + 1) [0..])
 
 filterGamesOnBeatsRecord :: [Int] -> Int -> [Int]
 filterGamesOnBeatsRecord possibleOutcomes currentRecord = filter (> currentRecord) possibleOutcomes
 
 part_1 :: [Game] -> [Int]
-part_1 = map (\game -> length (filterGamesOnBeatsRecord (possibleOutcomes game) (recordDistance game)))
+part_1 = map (\game -> length (filterGamesOnBeatsRecord (numberOfWinningOutcomes game) (recordDistance game)))
 
 main :: IO ()
 main = do
