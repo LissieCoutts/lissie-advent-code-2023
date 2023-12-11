@@ -4,8 +4,8 @@ getNumberOfPossibleOutcomes :: Int -> Int -> Int
 getNumberOfPossibleOutcomes t s = t - 1 - 2 * floor (fromIntegral t/2 - 0.5 * sqrt (fromIntegral t^2 - 4 * fromIntegral s))
 
 part_2 :: String -> IO ()
-part_2 line =
-  let [timeStr, distanceStr] = lines line
+part_2 input =
+  let [timeStr, distanceStr] = lines input
       time = read (filter isDigit timeStr) :: Int
       distance = read (filter isDigit distanceStr) :: Int
       result = getNumberOfPossibleOutcomes time distance
