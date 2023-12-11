@@ -48,5 +48,5 @@ main = do
       input <- readFile "input.txt"
       let linesArray = lines input
       let answer = part_1 linesArray
-      putStrLn $ "Total sum: " ++ (show $ answer)
+      putStrLn $ "Total sum: " ++ show answer
 
